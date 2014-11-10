@@ -110,32 +110,32 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-ADCenUART.out \
+peno-esat-thuiszorgmonitor.out \
 
 EXE_OUTPUTS__QUOTED += \
-"ADCenUART.out" \
+"peno-esat-thuiszorgmonitor.out" \
 
 BIN_OUTPUTS += \
-ADCenUART.hex \
+peno-esat-thuiszorgmonitor.hex \
 
 BIN_OUTPUTS__QUOTED += \
-"ADCenUART.hex" \
+"peno-esat-thuiszorgmonitor.hex" \
 
 
 # All Target
-all: ADCenUART.out
+all: peno-esat-thuiszorgmonitor.out
 
 # Tool invocations
-ADCenUART.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+peno-esat-thuiszorgmonitor.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MSP430 Linker'
-	"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=eabi --advice:power=all -g --define=__CC430F5137__ --diag_warning=225 --display_error_number --diag_wrap=off --silicon_errata=CPU18 --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal -z -m"ADCenUART.map" --heap_size=80 --stack_size=80 --use_hw_mpy=F5 --cinit_hold_wdt=on -i"c:/ti/ccsv6/ccs_base/msp430/include" -i"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/lib" -i"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -i"c:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="ADCenUART_linkInfo.xml" --rom_model -o "ADCenUART.out" $(ORDERED_OBJS)
+	"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/cl430" -vmspx --abi=eabi --advice:power=all -g --define=__CC430F5137__ --diag_warning=225 --display_error_number --diag_wrap=off --silicon_errata=CPU18 --silicon_errata=CPU21 --silicon_errata=CPU22 --silicon_errata=CPU23 --silicon_errata=CPU40 --printf_support=minimal -z -m"peno-esat-thuiszorgmonitor.map" --heap_size=80 --stack_size=80 --use_hw_mpy=F5 --cinit_hold_wdt=on -i"c:/ti/ccsv6/ccs_base/msp430/include" -i"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/lib" -i"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/include" -i"c:/ti/ccsv6/ccs_base/msp430/lib/5xx_6xx_FRxx" --reread_libs --warn_sections --display_error_number --diag_wrap=off --xml_link_info="peno-esat-thuiszorgmonitor_linkInfo.xml" --rom_model -o "peno-esat-thuiszorgmonitor.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-ADCenUART.hex: $(EXE_OUTPUTS)
+peno-esat-thuiszorgmonitor.hex: $(EXE_OUTPUTS)
 	@echo 'Invoking: MSP430 Hex Utility'
-	"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/hex430" --memwidth=8 --romwidth=8 -o "ADCenUART.hex" $(EXE_OUTPUTS__QUOTED)
+	"c:/ti/ccsv6/tools/compiler/msp430_4.3.3/bin/hex430" --memwidth=8 --romwidth=8 -o "peno-esat-thuiszorgmonitor.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $@'
 	@echo ' '
 
