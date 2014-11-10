@@ -1,7 +1,7 @@
 ******************************************************************************
                   MSP430 Linker PC v4.3.3                      
 ******************************************************************************
->> Linked Mon Nov 10 16:23:41 2014
+>> Linked Mon Nov 10 17:21:17 2014
 
 OUTPUT FILE NAME:   <peno-esat-thuiszorgmonitor.out>
 ENTRY POINT SYMBOL: "_c_int00"  address: 000081a4
@@ -109,12 +109,12 @@ section   page    origin      length       input sections
 .text      0    00008000    00000208     
                   00008000    00000084     rts430x_lc_sd_eabi.lib : autoinit.obj (.text:_auto_init_hold_wdt)
                   00008084    0000007a     main.obj (.text:main)
-                  000080fe    00000042     main.obj (.text:init_UART)
+                  000080fe    00000042     UART.obj (.text:init_UART)
                   00008140    0000003e     rts430x_lc_sd_eabi.lib : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
-                  0000817e    00000026     interrupts.obj (.text:_isr:ADC12_ISR)
+                  0000817e    00000026     ADC.obj (.text:_isr:ADC12_ISR)
                   000081a4    0000001a     rts430x_lc_sd_eabi.lib : boot.obj (.text:_isr:_c_int00_noexit)
-                  000081be    0000001a     main.obj (.text:init_ADC)
-                  000081d8    00000012     interrupts.obj (.text:_isr:USCI_A0_ISR)
+                  000081be    0000001a     ADC.obj (.text:init_ADC)
+                  000081d8    00000012     UART.obj (.text:_isr:USCI_A0_ISR)
                   000081ea    00000010     main.obj (.text:init_LED)
                   000081fa    00000006     rts430x_lc_sd_eabi.lib : isr_trap.obj (.text:__TI_ISR_TRAP)
                   00008200    00000004                            : pre_init.obj (.text:_system_pre_init)
@@ -160,13 +160,13 @@ TIMER0_A0
                   0000ffee    00000002     rts430x_lc_sd_eabi.lib : int55.obj (.int55)
 
 ADC12      0    0000fff0    00000002     
-                  0000fff0    00000002     interrupts.obj (.int56)
+                  0000fff0    00000002     ADC.obj (.int56)
 
 USCI_B0    0    0000fff2    00000002     
                   0000fff2    00000002     rts430x_lc_sd_eabi.lib : int57.obj (.int57)
 
 USCI_A0    0    0000fff4    00000002     
-                  0000fff4    00000002     interrupts.obj (.int58)
+                  0000fff4    00000002     UART.obj (.int58)
 
 WDT        0    0000fff6    00000002     
                   0000fff6    00000002     rts430x_lc_sd_eabi.lib : int59.obj (.int59)

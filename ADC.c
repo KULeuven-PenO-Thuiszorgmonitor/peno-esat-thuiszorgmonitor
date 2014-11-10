@@ -1,20 +1,14 @@
 #include <msp430.h>
 #include "initialisatie.h"
-// Echo back RXed character, confirm TX buffer is ready first
-#pragma vector=USCI_A0_VECTOR
-__interrupt void USCI_A0_ISR(void)
-{
-  switch(__even_in_range(UCA0IV,4))
-  {
-  case 0:break;                             // Vector 0 - no interrupt
-  case 2:                                   // Vector 2 - RXIFG - interrupts from receiving something
-    while (!(UCA0IFG&UCTXIFG));             // USCI_A0 TX buffer ready?
-    send^=1;
-    break;
-  case 4:break;                             // Vector 4 - TXIFG - interrupts from sending something
-  default: break;
-  }
+
+void init_ADC(void){
+	P2SEL |= BIT0; 						// P2.0 ADC option select
+	ADC12CTL0 = ADC12SHT02 + ADC12ON; 	// Sampling time, ADC12 on
+	ADC12CTL1 = ADC12SHP; 				// Use sampling timer
+	ADC12IE = 0x01; 					// Enable interrupt
+	ADC12CTL0 |= ADC12ENC;
 }
+
 
 #pragma vector = ADC12_VECTOR
 __interrupt void ADC12_ISR(void)

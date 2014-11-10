@@ -7,27 +7,33 @@ CMD_SRCS += \
 ../lnk_cc430f5137.cmd 
 
 C_SRCS += \
-../interrupts.c \
+../ADC.c \
+../UART.c \
 ../main.c 
 
 OBJS += \
-./interrupts.obj \
+./ADC.obj \
+./UART.obj \
 ./main.obj 
 
 C_DEPS += \
-./interrupts.pp \
+./ADC.pp \
+./UART.pp \
 ./main.pp 
 
 C_DEPS__QUOTED += \
-"interrupts.pp" \
+"ADC.pp" \
+"UART.pp" \
 "main.pp" 
 
 OBJS__QUOTED += \
-"interrupts.obj" \
+"ADC.obj" \
+"UART.obj" \
 "main.obj" 
 
 C_SRCS__QUOTED += \
-"../interrupts.c" \
+"../ADC.c" \
+"../UART.c" \
 "../main.c" 
 
 

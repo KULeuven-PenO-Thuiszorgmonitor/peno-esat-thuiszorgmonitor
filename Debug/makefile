@@ -8,7 +8,8 @@ CG_TOOL_ROOT := c:/ti/ccsv6/tools/compiler/msp430_4.3.3
 
 ORDERED_OBJS += \
 $(GEN_CMDS__FLAG) \
-"./interrupts.obj" \
+"./ADC.obj" \
+"./UART.obj" \
 "./main.obj" \
 "../lnk_cc430f5137.cmd" \
 -l"libc.a" \
@@ -142,8 +143,8 @@ peno-esat-thuiszorgmonitor.hex: $(EXE_OUTPUTS)
 # Other Targets
 clean:
 	-$(RM) $(EXE_OUTPUTS__QUOTED)$(BIN_OUTPUTS__QUOTED)
-	-$(RM) "interrupts.pp" "main.pp" 
-	-$(RM) "interrupts.obj" "main.obj" 
+	-$(RM) "ADC.pp" "UART.pp" "main.pp" 
+	-$(RM) "ADC.obj" "UART.obj" "main.obj" 
 	-@echo 'Finished clean'
 	-@echo ' '
 
