@@ -1,4 +1,3 @@
-//yolo
 #include <msp430.h>
 #include "initialisatie.h"
 #include "ADC.h"
