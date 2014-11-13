@@ -1,1 +1,0 @@
-"./ADC.obj" "./UART.obj" "./main.obj" "../lnk_cc430f5137.cmd" -l"libc.a" -l"libmath.a" 
