@@ -27,7 +27,7 @@ void send_UART(void){
 	volatile unsigned char index;								// index en i zijn iteratievariabelen
 
 	for(index = 0; index < sizeof(result)/sizeof(char); index++){
-		i=0;while (i<20000){i++;} 								// even wachten
+		i=20000;while (i>0){i--;} 								// even wachten
 		while (!(UCA0IFG&UCTXIFG)); 							// USCI_A0 TX buffer ready?
 		UCA0TXBUF = result[index]; 								// stuur data
 		P1OUT ^= BIT0; 											// switch led

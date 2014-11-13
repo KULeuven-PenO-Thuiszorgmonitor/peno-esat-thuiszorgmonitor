@@ -1,6 +1,14 @@
+#define versie 1
+
 #include <msp430.h>
 #include "initialisatie.h"
+
+#if versie==1
 #include "ADC.h"
+#elif versie == 2
+#include "ADC.h"
+#endif
+
 #include "UART.h"
 
 
@@ -15,7 +23,7 @@ int main(void){
 		ADC12CTL0 |= ADC12SC; 				// Start sampling/conversion
 		__bis_SR_register(GIE); 			// LPM0, ADC12_ISR will force exit
 		__no_operation(); 					// For debugger
-		i=0;while (i<20000){i++;} 			// even wachten
+		i=20000;while(i>0){i--;} 			// even wachten
 		if (send){
 			send_UART();					// verzend de data
 		}
