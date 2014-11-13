@@ -3,9 +3,6 @@
 #include "ADC.h"
 #include "UART.h"
 
-#if 0
-#elif 0
-#endif
 
 int main(void){
 	volatile unsigned int i; 				// volatile voor de compiler
