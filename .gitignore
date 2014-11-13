@@ -73,4 +73,4 @@ $RECYCLE.BIN/
 *.msp
 
 # Debug folder is niet nodig
-/debug
+/Debug
