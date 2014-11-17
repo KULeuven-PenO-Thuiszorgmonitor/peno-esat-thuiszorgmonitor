@@ -1,20 +1,21 @@
-#define versie 1
+#define versie 1 //0:test 1:pulsoximeter 2:
 
 #include <msp430.h>
 #include "initialisatie.h"
 
-#if versie==1
-#include "ADC.h"
-#elif versie == 2
-#include "ADC.h"
+#if versie == 0
+#include "sensoren/ADC0.h"
+#elif versie == 1
+#include "sensoren/ADC1.h"
 #endif
 
 #include "UART.h"
+#include "WDT.h"
 
 
 int main(void){
 	volatile unsigned int i; 				// volatile voor de compiler
-	WDTCTL = WDTPW + WDTHOLD; 				// Stop WDT
+	WDT_select();
 	init_ADC(); 							// initialiseer de ADC
 	init_UART(); 							// initialiseer de UART
 	init_LED(); 							// initialiseer de LED's
