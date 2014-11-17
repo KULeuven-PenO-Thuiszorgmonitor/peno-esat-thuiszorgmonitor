@@ -1,5 +1,5 @@
 #include <msp430.h>
-#include "initialisatie.h"
+#include "../initialisatie.h"
 
 void init_ADC(void){
 	P2SEL |= BIT0; 						// P2.0 ADC option select
