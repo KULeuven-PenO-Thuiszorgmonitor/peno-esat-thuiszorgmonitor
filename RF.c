@@ -1,18 +1,6 @@
 #include "RF.h"
 
 
-void Send_Data(unsigned char ADDRESS, unsigned char Data, unsigned char PACKET_LEN) {
-	const unsigned char TxBuffer[PACKET_LEN];
-	WriteToTxBuffer(ADDRESS, Data, PACKET_LEN, TxBuffer[PACKET_LEN]);
-
-	}
-}
-
-void WriteToTxBuffer(unsigned char ADDRESS, unsigned char Data, unsigned char PACKET_LEN, const unsigned char TxBuffer[PACKET_LEN]; ) {
-	for (i=0; i < PACKET_LEN, i++) {
-
-	}
-}
 
 void init_RF(void){
 	// Increase PMMCOREV level to 2 for proper radio operation
