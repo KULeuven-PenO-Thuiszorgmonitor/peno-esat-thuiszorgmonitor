@@ -1,4 +1,8 @@
 eclipse.preferences.version=1
+encoding//Debug/Transciever_code/HAL/subdir_rules.mk=UTF-8
+encoding//Debug/Transciever_code/HAL/subdir_vars.mk=UTF-8
+encoding//Debug/Transciever_code/subdir_rules.mk=UTF-8
+encoding//Debug/Transciever_code/subdir_vars.mk=UTF-8
 encoding//Debug/makefile=UTF-8
 encoding//Debug/objects.mk=UTF-8
 encoding//Debug/sensoren/subdir_rules.mk=UTF-8
