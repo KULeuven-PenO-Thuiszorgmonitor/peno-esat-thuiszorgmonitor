@@ -27,7 +27,7 @@ unsigned char Receive_data(unsigned char ADDRESS);
 #define  CRC_OK             (BIT7)          // CRC_OK bit
 #define  PATABLE_VAL        (0x51)          // 0 dBm output
 
-//extern RF_SETTINGS rfSettings;
+extern RF_SETTINGS rfSettings;
 
 unsigned char packetReceived;
 unsigned char packetTransmit;
