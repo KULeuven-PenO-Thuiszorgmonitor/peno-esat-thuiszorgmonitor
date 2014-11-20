@@ -1,13 +1,6 @@
-#define versie 1 //0:test 1:pulsoximeter 2:
-
 #include <msp430.h>
 #include "initialisatie.h"
-
-#if versie == 0
-#include "sensoren/ADC0.h"
-#elif versie == 1
 #include "sensoren/ADC1.h"
-#endif
 
 #include "UART.h"
 #include "WDT.h"

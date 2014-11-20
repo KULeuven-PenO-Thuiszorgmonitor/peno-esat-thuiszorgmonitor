@@ -1,7 +1,7 @@
 #include <msp430.h>
 #include "../initialisatie.h"
 
-void init_ADC(void){
+void init_ADC1(void){
 	P2SEL |= BIT0; 						// P2.0 ADC option select
 	ADC12CTL0 = ADC12SHT02 + ADC12ON; 	// Sampling time, ADC12 on
 	ADC12CTL1 = ADC12SHP; 				// Use sampling timer
@@ -11,7 +11,7 @@ void init_ADC(void){
 
 
 #pragma vector = ADC12_VECTOR
-__interrupt void ADC12_ISR(void)
+__interrupt void ADC12_ISR1(void)
 {
   switch(__even_in_range(ADC12IV,34))
   {

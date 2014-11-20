@@ -1,3 +1,4 @@
+#define versie 1
 #include <msp430.h>
 
 void WDT_select(void){
@@ -14,6 +15,6 @@ void WDT_select(void){
 #pragma vector=WDT_VECTOR
 __interrupt void WDT_ISR(void)
 {
-	1==1;
+	__no_operation();
 }
 
