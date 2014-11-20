@@ -13,14 +13,12 @@ int main(void){
 	init_UART(); 							// initialiseer de UART
 	init_LED(); 							// initialiseer de LED's
 	send = 0;
+	ADC12CTL0 |= ADC12SC; 					// Start sampling/conversion
 	while (1){
-		ADC12CTL0 |= ADC12SC; 				// Start sampling/conversion
+
 		__bis_SR_register(GIE); 			// LPM0, ADC12_ISR will force exit
 		__no_operation(); 					// For debugger
-		i=20000;while(i>0){i--;} 			// even wachten
-		if (send){
-			send_UART();					// verzend de data
-		}
+
 	}
 }
 

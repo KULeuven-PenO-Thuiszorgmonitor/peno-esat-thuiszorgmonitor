@@ -1,4 +1,4 @@
-#define versie 1
+#define versie 0
 #include <msp430.h>
 
 void WDT_select(void){
