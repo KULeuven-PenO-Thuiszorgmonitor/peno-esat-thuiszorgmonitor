@@ -21,6 +21,20 @@ void init_UART(void){
 
 }
 
+
+void send_UART(void){
+	volatile unsigned int i; 									// volatile voor de compiler
+	volatile unsigned char index;								// index en i zijn iteratievariabelen
+
+	for(index = 0; index < sizeof(result)/sizeof(char); index++){
+		i=20000;while (i>0){i--;} 								// even wachten
+		while (!(UCA0IFG&UCTXIFG)); 							// USCI_A0 TX buffer ready?
+		UCA0TXBUF = result[index]; 								// stuur data
+		P1OUT ^= BIT0; 											// switch led
+	}
+}
+
+
 // Echo back RXed character, confirm TX buffer is ready first
 #pragma vector=USCI_A0_VECTOR
 __interrupt void USCI_A0_ISR(void)

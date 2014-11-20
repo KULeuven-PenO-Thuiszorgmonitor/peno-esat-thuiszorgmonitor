@@ -1,5 +1,5 @@
 #include <msp430.h>
-#include "initialisatie.h"
+#include "../initialisatie.h"
 
 void init_ADC(void){
 	P2SEL |= BIT0; 						// P2.0 ADC option select
@@ -7,6 +7,9 @@ void init_ADC(void){
 	ADC12CTL1 = ADC12SHP; 				// Use sampling timer
 	ADC12IE = 0x01; 					// Enable interrupt
 	ADC12CTL0 |= ADC12ENC;
+	ADC12CTL2|=ADC12PDIV;				// deelt de klokfreq van 5MHz door 4. hierna nog eens delen!!
+
+	ADC12CTL1|=ADC12CONSEQ_2; 			// zet de adc in Repeat-single-channel modus > hierna pas ADC12ON
 }
 
 
