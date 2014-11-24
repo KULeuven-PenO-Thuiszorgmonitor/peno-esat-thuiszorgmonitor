@@ -18,7 +18,7 @@ void ReceiveOff(void);
 void InitButtonLeds(void);
 void InitRadio(void);
 
-unsigned char Receive_data(unsigned char ADDRESS);
+unsigned char *Receive_data(unsigned char ADDRESS);
 
 // Variablen
 #define  PACKET_LEN         (0x05)			// PACKET_LEN <= 61

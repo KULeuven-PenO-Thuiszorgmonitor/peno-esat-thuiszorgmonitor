@@ -13,12 +13,16 @@ void init_RF(void){
 	receiving = 1;
 }
 
-unsigned char Receive_data(unsigned char ADDRESS){
+unsigned char *Receive_data(unsigned char ADDRESS){
+	// Contact Cedric for errors
 	// Check for ADDRESS:
 	// If ADDRESS = Correct:
 	//		Return contents of RxBuffer
 	// If ADDRESS = False:
 	//		Break
+	const int count = 33;
+	char *ret = malloc(count);
+	volatile unsigned i;
 // Read the length byte from the FIFO
         RxBufferLength = ReadSingleReg( RXBYTES );
         ReadBurstReg(RF_RXFIFORD, RxBuffer, RxBufferLength);
@@ -27,10 +31,15 @@ unsigned char Receive_data(unsigned char ADDRESS){
         __no_operation();
 
 // Check the CRC results
-        if(RxBuffer[CRC_LQI_IDX] & CRC_OK)
+        if(RxBuffer[CRC_LQI_IDX] && CRC_OK){
         	// Check to see if the ADDRESS is correct)
-        	if(RxBuffer[BIT0] & ADDRESS)
-        		return RxBuffer;
+        	if(RxBuffer[BIT0] && ADDRESS){
+        		for(i = count; i > 0; i--){
+        			ret[i] = RxBuffer[i];
+        		}
+        		return ret;
+        	}
+        }
         return 0;
 }
 
