@@ -1,15 +1,21 @@
 #include <msp430.h>
 #include "../initialisatie.h"
+#include "../UART.h"
 
 void init_ADC(void){
 	P2SEL |= BIT0; 						// P2.0 ADC option select
-	ADC12CTL0 = ADC12SHT02 + ADC12ON; 	// Sampling time, ADC12 on
+	ADC12CTL0|= ADC12SHT0_13; 			// Sampling time (1024) , ADC12 on
+	ADC12CTL1|=ADC12CSTARTADD_0;
 	ADC12CTL1 = ADC12SHP; 				// Use sampling timer
 	ADC12IE = 0x01; 					// Enable interrupt
-	ADC12CTL0 |= ADC12ENC;
 	ADC12CTL2|=ADC12PDIV;				// deelt de klokfreq van 5MHz door 4. hierna nog eens delen!!
-
+	ADC12CTL1|=ADC12DIV_7;				// deelt de klokfreq nog eens door 8
 	ADC12CTL1|=ADC12CONSEQ_2; 			// zet de adc in Repeat-single-channel modus > hierna pas ADC12ON
+	ADC12CTL0|=ADC12ON;
+	ADC12CTL0|=ADC12MSC;
+	ADC12CTL0 |= ADC12ENC;				// dit moet als laatste!!
+
+
 }
 
 
@@ -25,7 +31,9 @@ __interrupt void ADC12_ISR(void)
     adcgeheugen=ADC12MEM0;
 	result[0]=adcgeheugen;
 	result[1]=adcgeheugen>>8;
-
+	if (send){
+		send_UART();					// verzend de data
+	}
   //  __bic_SR_register_on_exit(LPM0_bits);   // Exit active CPU
 
   case  8: break;                           // Vector  8:  ADC12IFG1

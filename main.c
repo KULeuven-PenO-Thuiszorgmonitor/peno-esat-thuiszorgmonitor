@@ -13,14 +13,12 @@ int main(void){
 	init_UART(); 							// initialiseer de UART
 	init_LED(); 							// initialiseer de LED's
 	send = 0;
+	ADC12CTL0 |= ADC12SC; 					// Start sampling/conversion
 	while (1){
-		ADC12CTL0 |= ADC12SC; 				// Start sampling/conversion
+
 		__bis_SR_register(GIE); 			// LPM0, ADC12_ISR will force exit
 		__no_operation(); 					// For debugger
-		i=20000;while(i>0){i--;} 			// even wachten
-		if (send){
-			send_UART();					// verzend de data
-		}
+
 	}
 }
 
@@ -28,7 +26,7 @@ int main(void){
 
 
 void init_LED(void){
-	P1DIR |= BIT0; 						// P1.0 output (LED)
+	P1DIR |= BIT0+BIT1+BIT2; 			// P1.0 output (LED)
 	P2DIR |= BIT3+BIT6+BIT7; 			// de 3 leds als output aanduiden
-	P1OUT |= BIT0; 						// LED on
+	P1OUT |= BIT0+BIT1; 						// LED on
 }

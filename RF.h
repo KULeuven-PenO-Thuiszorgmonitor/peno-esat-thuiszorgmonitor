@@ -3,9 +3,8 @@
 
 
 #include <cc430x513x.h>
-//#include "Transciever_code/HAL/RF1A.h"
-#include "Transciever_code/HAL/hal_pmm.h"
 #include "Transciever_code/HAL/RF1A.h"
+#include "Transciever_code/HAL/HAL_PMM.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -19,6 +18,8 @@ void ReceiveOff(void);
 void  append(unsigned char s[], unsigned char c);
 
 void InitRadio(void);
+
+unsigned char Receive_data(unsigned char ADDRESS);
 
 // Variablen
 #define  PACKET_LEN         (0x05)			// PACKET_LEN <= 61
