@@ -27,13 +27,15 @@ __interrupt void ADC12_ISR(void)
   case  0: break;                           // Vector  0:  No interrupt
   case  2: break;                           // Vector  2:  ADC overflow
   case  4: break;                           // Vector  4:  ADC timing overflow
-  case  6:                                  // Vector  6:  ADC12IFG0
-    adcgeheugen=ADC12MEM0;
-	result[0]=adcgeheugen;
-	result[1]=adcgeheugen>>8;
-	if (send){
-		send_UART();					// verzend de data
-	}
+  case  6:									// Vector  6:  ADC12IFG0
+	  result[ADCcounter]=ADC12MEM0;
+	  ADCcounter+=1;
+   // adcgeheugen=ADC12MEM0;
+	//result[0]=adcgeheugen;
+	//result[1]=adcgeheugen>>8;
+	//if (send){
+	//	send_UART();					// verzend de data
+	//}
   //  __bic_SR_register_on_exit(LPM0_bits);   // Exit active CPU
 
   case  8: break;                           // Vector  8:  ADC12IFG1

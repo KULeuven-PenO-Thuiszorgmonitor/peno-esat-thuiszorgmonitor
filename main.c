@@ -14,7 +14,8 @@ int main(void){
 	init_LED(); 							// initialiseer de LED's
 	send = 0;
 	ADC12CTL0 |= ADC12SC; 					// Start sampling/conversion
-	while (1){
+	ADCcounter=0;
+	while (ADCcounter<400){
 
 		__bis_SR_register(GIE); 			// LPM0, ADC12_ISR will force exit
 		__no_operation(); 					// For debugger
