@@ -3,9 +3,9 @@
 void append(unsigned char* array_in, unsigned char address, unsigned char* array_out) {
      //unsigned int len = sizeof(s);
 	array_out[0] = address;
-	int i;
-     for (i=1; i< PACKET_LEN+1; i++) {
-    	 array_out[i] = array_in[i-1];
+	int i2;
+     for (i2=1; i2< PACKET_LEN+1; i2++) {
+    	 array_out[i2] = array_in[i2-1];
      }
 }
 
@@ -22,10 +22,6 @@ void Send_Data(unsigned char ADDRESS, unsigned char* Data)
 	transmitting = 1;
 }
 
-
-
-
-
 void init_RF(void){
 	// Increase PMMCOREV level to 2 for proper radio operation
 	SetVCore(2);
@@ -34,6 +30,7 @@ void init_RF(void){
 
 	ReceiveOn();
 	receiving = 1;
+	transmitting = 0;
 }
 
 unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsigned char* Received_data){
@@ -54,7 +51,7 @@ unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsi
 // Check the CRC results
     if(RxBuffer[CRC_LQI_IDX] && CRC_OK){
     	// Check to see if the ADDRESS is correct)
-    	if(RxBuffer[BIT0] && ADDRESS){
+    	if(RxBuffer[0] && ADDRESS){
     		for(i = PACKET_LEN+1; i > 0; i--){
     			Received_data[i] = RxBuffer[i];
         	}
@@ -128,16 +125,7 @@ __interrupt void CC1101_ISR(void)
     case 20:                                // RFIFG9
       if(receiving)			    // RX end of packet
       {
-        // Read the length byte from the FIFO
-        RxBufferLength = ReadSingleReg( RXBYTES );
-        ReadBurstReg(RF_RXFIFORD, RxBuffer, RxBufferLength);
-
-        // Stop here to see contents of RxBuffer
-        __no_operation();
-
-        // Check the CRC results
-        if(RxBuffer[CRC_LQI_IDX] & CRC_OK)
-        	P1OUT ^= BIT0;
+    	  Receive_data(RxBuffer, ADDRESS, Received_data)
       }
       else if(transmitting)		    // TX end of packet
       {
