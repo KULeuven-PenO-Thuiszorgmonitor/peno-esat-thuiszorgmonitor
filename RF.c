@@ -7,11 +7,7 @@ void WriteToTxBuffer(ADDRESS, Data)
 	append(TxBuffer, Data);
 }
 
-void  append(unsigned char s[], unsigned char c) {
-     unsigned int len = sizeof(s);
-     s[len] = c;
-     s[len+1] = '\0';
-}
+
 
 void Send_Data(ADDRESS, Data)
 {
@@ -40,35 +36,31 @@ void init_RF(void){
 	receiving = 1;
 }
 
-unsigned char *Receive_data(unsigned char ADDRESS){
+unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsigned char* Received_data){
 	// Contact Cedric for errors
-
 	// Check for ADDRESS:
 	// If ADDRESS = Correct:
 	//		Return contents of RxBuffer
 	// If ADDRESS = False:
 	//		Break
-	const int count = 33;
-	char *ret = malloc(count);
 	volatile unsigned i;
 // Read the length byte from the FIFO
-        RxBufferLength = ReadSingleReg( RXBYTES );
-        ReadBurstReg(RF_RXFIFORD, RxBuffer, RxBufferLength);
+	RxBufferLength = ReadSingleReg( RXBYTES );
+	ReadBurstReg(RF_RXFIFORD, RxBuffer, RxBufferLength);
 
 // Stop here to see contents of RxBuffer
-        __no_operation();
+	__no_operation();
 
 // Check the CRC results
-        if(RxBuffer[CRC_LQI_IDX] && CRC_OK){
-        	// Check to see if the ADDRESS is correct)
-        	if(RxBuffer[BIT0] && ADDRESS){
-        		for(i = count; i > 0; i--){
-        			ret[i] = RxBuffer[i];
-        		}
-        		return ret;
+    if(RxBuffer[CRC_LQI_IDX] && CRC_OK){
+    	// Check to see if the ADDRESS is correct)
+    	if(RxBuffer[BIT0] && ADDRESS){
+    		for(i = PACKET_LEN+1; i > 0; i--){
+    			Received_data[i] = RxBuffer[i];
         	}
         }
-        return 0;
+    }
+    return 0;
 }
 
 

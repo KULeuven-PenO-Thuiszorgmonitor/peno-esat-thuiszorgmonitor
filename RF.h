@@ -19,7 +19,7 @@ void  append(unsigned char s[], unsigned char c);
 
 void InitRadio(void);
 
-unsigned char *Receive_data(unsigned char ADDRESS);
+unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsigned char* Received_data);
 
 // Variablen
 #define  PACKET_LEN         (0x05)			// PACKET_LEN <= 61
