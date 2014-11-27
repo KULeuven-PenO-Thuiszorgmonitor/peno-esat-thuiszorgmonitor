@@ -1,5 +1,7 @@
 #include "CRYPT.h"
 #define LENGTERES 2
+
+void opdrachtsend(unsigned char reslijst[LENGTERES+1], unsigned char result[4][8]);
 /*
 int maine (void)
 {       unsigned char result[4][8];
@@ -327,7 +329,7 @@ void pelican(unsigned char code[4][4], unsigned char tekst[], unsigned char data
 	aes(data, code);
 
 }
-void opdrachtsend(unsigned char reslijst[LENGTERES], unsigned char result[4][8])
+void opdrachtsend(unsigned char reslijst[LENGTERES+1], unsigned char result[4][8])
 {	int row, column, temp;
 	time_t t;
 	unsigned char code_encryption[4][4] = {
@@ -347,8 +349,8 @@ void opdrachtsend(unsigned char reslijst[LENGTERES], unsigned char result[4][8])
     srand((unsigned) time(&t));
     
     
-    for(char i = 0;i<LENGTERES;i++){
-    data[i/4][i%4]= reslijst[i]
+    for(i=0;i<LENGTERES;i++){
+    data[i/4][i%4]= reslijst[i];
 }
     temp = rand()&0xff;
     data[2][0]= (unsigned char)temp;
@@ -364,9 +366,7 @@ void opdrachtsend(unsigned char reslijst[LENGTERES], unsigned char result[4][8])
 
     aes(data, code_encryption);
 
-    tekst[0]=ch1;
-    tekst[1]=ch2;
-    tekst[2]=0;
+    reslijst[LENGTERES] = 0;
 
     unsigned char code_mac[4][4] = {
     {0xf5u, 0x47u, 0xd5u, 0x85u},
@@ -375,7 +375,7 @@ void opdrachtsend(unsigned char reslijst[LENGTERES], unsigned char result[4][8])
     {0x31u, 0xa4u, 0xb7u, 0x71u}};
 
     resetkey();
-    pelican(code_mac, tekst, datamac);
+    pelican(code_mac, reslijst, datamac);
 
 	for (column=0; column<4;  column++)
 		for (row=0;row<4;  row++)

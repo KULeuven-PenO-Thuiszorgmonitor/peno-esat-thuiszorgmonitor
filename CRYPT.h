@@ -66,11 +66,11 @@ void addblock(unsigned char [4][4], unsigned char [4][4]);
 void pelican(unsigned char [4][4],unsigned char [], unsigned char [4][4]);
 
 void resetkey(void);
-
+volatile char i;
 unsigned char key[4][44];
 int nokey = 1;
 
-void opdrachtsend(unsigned char ch1, unsigned char ch2, unsigned char result[4][8]);
+
 void opdrachtreceive(unsigned char result[4][8], unsigned char tekst[8]);
 
 #endif /* DECR_H_ */
