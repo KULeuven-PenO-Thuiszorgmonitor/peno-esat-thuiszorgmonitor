@@ -1,4 +1,6 @@
-#define VERSIE 1 //1:hartslagmonitor 1
+#define VERSIE 1
+//1:hartslagmonitor analyse
+//10:hartslagmonitor ruw
 
 #include <msp430.h>
 #include "initialisatie.h"
