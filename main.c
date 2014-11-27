@@ -1,11 +1,14 @@
+#define VERSIE 1 //1:hartslagmonitor 1
+
 #include <msp430.h>
 #include "initialisatie.h"
-#include "sensoren/ADC1.h"
 
+#if VERSIE == 0
+#elif VERSIE ==1
+
+#include "sensoren/ADC1.h"
 #include "UART.h"
 #include "WDT.h"
-
-
 int main(void){
 	volatile unsigned int i; 				// volatile voor de compiler
 	WDT_select();
@@ -24,6 +27,30 @@ int main(void){
 
 	}
 }
+#elif VERSIE == 10
+#include "sensoren/ADC1.h"
+#include "UART.h"
+#include "WDT.h"
+int main(void){
+	volatile unsigned int i; 				// volatile voor de compiler
+	WDT_select();
+	init_ADC(); 							// initialiseer de ADC
+	init_UART(); 							// initialiseer de UART
+	init_LED(); 							// initialiseer de LED's
+	send = 0;
+	ADCcounter=0;
+	while(1){
+		ADC12CTL0 |= ADC12SC; 					// Start sampling/conversion
+		while (ADCcounter<400){
+			__bis_SR_register(GIE); 			// LPM0, ADC12_ISR will force exit
+			__no_operation(); 					// For debugger
+		}
+		ADC12CTL0 ^= ADC12SC; 					// Stop sampling/conversion
+
+	}
+}
+#else
+#endif
 
 
 

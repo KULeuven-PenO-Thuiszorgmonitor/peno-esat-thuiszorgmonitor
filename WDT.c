@@ -1,5 +1,5 @@
 #define versie 1
-#include <msp430.h>
+#include "WDT.h"
 
 
 void WDT_select(void){
