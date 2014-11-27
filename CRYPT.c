@@ -1,3 +1,4 @@
+#include "CRYPT.h"
 /*
 int maine (void)
 {       unsigned char result[4][8];
