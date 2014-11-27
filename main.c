@@ -15,13 +15,16 @@ int main(void){
 	init_LED(); 							// initialiseer de LED's
 	init_RF();								// initialiseer de radio
 	send = 0;
-	ADC12CTL0 |= ADC12SC; 					// Start sampling/conversion
 	ADCcounter=0;
 
-	while (ADCcounter<400){
+	while(1){
+		ADC12CTL0 |= ADC12SC; 					// Start sampling/conversion
+		while (ADCcounter<400){
+			__bis_SR_register(GIE); 			// LPM0, ADC12_ISR will force exit
+			__no_operation(); 					// For debugger
+		}
+		ADC12CTL0 ^= ADC12SC; 					// Stop sampling/conversion
 
-		__bis_SR_register(GIE); 			// LPM0, ADC12_ISR will force exit
-		__no_operation(); 					// For debugger
 
 	}
 }
