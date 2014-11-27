@@ -51,7 +51,7 @@ unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsi
 // Check the CRC results
     if(RxBuffer[CRC_LQI_IDX] && CRC_OK){
     	// Check to see if the ADDRESS is correct)
-    	if(RxBuffer[BIT0] && ADDRESS){
+    	if(RxBuffer[0] && ADDRESS){
     		for(i = PACKET_LEN+1; i > 0; i--){
     			Received_data[i] = RxBuffer[i];
         	}
