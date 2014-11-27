@@ -15,7 +15,8 @@
 void Transmit(unsigned char *buffer, unsigned char length);
 void ReceiveOn(void);
 void ReceiveOff(void);
-void  append(unsigned char s[], unsigned char c);
+void append(unsigned char* array_in, unsigned char address, unsigned char* array_out);
+void Send_Data(unsigned char ADDRESS, unsigned char* Data);
 
 void InitRadio(void);
 
