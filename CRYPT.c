@@ -1,4 +1,5 @@
 #include "CRYPT.h"
+#define LENGTERES 2
 /*
 int maine (void)
 {       unsigned char result[4][8];
@@ -326,7 +327,7 @@ void pelican(unsigned char code[4][4], unsigned char tekst[], unsigned char data
 	aes(data, code);
 
 }
-void opdrachtsend(unsigned char ch1, unsigned char ch2, unsigned char result[4][8])
+void opdrachtsend(unsigned char reslijst[LENGTERES], unsigned char result[4][8])
 {	int row, column, temp;
 	time_t t;
 	unsigned char code_encryption[4][4] = {
@@ -344,9 +345,11 @@ void opdrachtsend(unsigned char ch1, unsigned char ch2, unsigned char result[4][
     unsigned char datamac[4][4];
     char tekst[]="xxxx";
     srand((unsigned) time(&t));
-
-    data[0][0]= ch1;
-    data[1][0]= ch2;
+    
+    
+    for(char i = 0;i<LENGTERES;i++){
+    data[i/4][i%4]= reslijst[i];
+}
     temp = rand()&0xff;
     data[2][0]= (unsigned char)temp;
     temp = rand()&0xff;

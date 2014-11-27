@@ -47,17 +47,17 @@ int main(void){
 	init_RF();								// initialiseer de radio
 	send = 0;
 	ADCcounter=0;
-
-	while(1){
-		ADC12CTL0 |= ADC12SC; 					// Start sampling/conversion
-		while (ADCcounter<400){
+	ADC12CTL0 |= ADC12SC; 					// Start sampling/conversion
+		while (ADCcounter<10){
 			__bis_SR_register(GIE); 			// LPM0, ADC12_ISR will force exit
 			__no_operation(); 					// For debugger
 		}
-		ADC12CTL0 ^= ADC12SC; 					// Stop sampling/conversion
+		ADCcounter=0
 
 
-	}
+
+
+
 }
 #else
 #endif

@@ -20,7 +20,7 @@ void Send_Data(unsigned char ADDRESS, unsigned char* Data);
 void init_RF(void);
 void InitRadio(void);
 
-unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsigned char* Received_data);
+//unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsigned char* Received_data);
 
 // Variablen
 #define  PACKET_LEN         (0x21)			// PACKET_LEN <= 61
