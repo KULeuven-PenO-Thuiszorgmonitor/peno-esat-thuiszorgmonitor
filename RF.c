@@ -138,7 +138,6 @@ __interrupt void CC1101_ISR(void)
     	  	//		Return contents of RxBuffer
     	  	// If ADDRESS = False:
     	  	//		Break
-    	  	volatile unsigned i;
     	  // Read the length byte from the FIFO
     	  	RxBufferLength = ReadSingleReg( RXBYTES );
     	  	ReadBurstReg(RF_RXFIFORD, RxBuffer, RxBufferLength);
