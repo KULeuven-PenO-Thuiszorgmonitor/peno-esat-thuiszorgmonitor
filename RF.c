@@ -1,23 +1,20 @@
 #include "RF.h"
 
 
-void WriteToTxBuffer(ADDRESS, Data)
-{
-	TxBuffer[0] = ADDRESS;
-	append(TxBuffer, Data);
+void append(unsigned char* array_in, unsigned char address, unsigned char* array_out) {
+     //unsigned int len = sizeof(s);
+	array_out[0] = address;
+	int i;
+     for (i=1; i< PACKET_LEN+1; i++) {
+    	 array_out[i] = array_in[i-1];
+     }
 }
 
-void  append(unsigned char s[], unsigned char c) {
-     unsigned int len = sizeof(s);
-     s[len] = c;
-     s[len+1] = '\0';
-}
-
-void Send_Data(ADDRESS, Data)
+void Send_Data(unsigned char ADDRESS, unsigned char* Data)
 {
-	const unsigned char TxBuffer[PACKET_LEN]={0x00,0x00,0x00,0x00,0x00};
+	unsigned char TxBuffer[PACKET_LEN];
 
-	WriteToTxBuffer(ADDRESS, Data);
+	append(Data, ADDRESS, TxBuffer);
 
 	ReceiveOff();
 	receiving = 0;
