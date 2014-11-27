@@ -5,7 +5,8 @@
 #include <cc430x513x.h>
 #include "Transciever_code/HAL/RF1A.h"
 #include "Transciever_code/HAL/HAL_PMM.h"
-
+#include <stdio.h>
+#include <string.h>
 
 /*******************
  * Function Definition
@@ -14,8 +15,8 @@
 void Transmit(unsigned char *buffer, unsigned char length);
 void ReceiveOn(void);
 void ReceiveOff(void);
+void  append(unsigned char s[], unsigned char c);
 
-void InitButtonLeds(void);
 void InitRadio(void);
 
 unsigned char *Receive_data(unsigned char ADDRESS);
@@ -34,13 +35,13 @@ unsigned char packetTransmit;
 
 unsigned char RxBuffer[PACKET_LEN+2];
 unsigned char RxBufferLength = 0;
-const unsigned char TxBuffer[PACKET_LEN]= {0x01, 0x02, 0x03, 0x04, 0x05};
-unsigned int buttonPressed = 0;
+unsigned char TxBuffer[PACKET_LEN];
 unsigned int i = 0;
 
 unsigned char transmitting = 0;
 unsigned char receiving = 0;
 
-unsigned char temp[PACKET_LEN+2];
+unsigned char ADDRESS;
+unsigned char Data[PACKET_LEN-1];
 
 #endif /* RF_H_ */

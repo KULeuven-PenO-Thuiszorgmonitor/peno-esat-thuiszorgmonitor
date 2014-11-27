@@ -26,7 +26,7 @@ int main(void){
 
 
 void init_LED(void){
-	P1DIR |= BIT0; 						// P1.0 output (LED)
+	P1DIR |= BIT0+BIT1+BIT2; 			// P1.0 output (LED)
 	P2DIR |= BIT3+BIT6+BIT7; 			// de 3 leds als output aanduiden
-	P1OUT |= BIT0; 						// LED on
+	P1OUT |= BIT0+BIT1; 						// LED on
 }

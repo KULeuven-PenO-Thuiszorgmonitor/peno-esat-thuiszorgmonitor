@@ -1,5 +1,6 @@
-#define versie 0
+#define versie 1
 #include <msp430.h>
+
 
 void WDT_select(void){
 #if versie == 1
@@ -15,6 +16,7 @@ void WDT_select(void){
 #pragma vector=WDT_VECTOR
 __interrupt void WDT_ISR(void)
 {
-	__no_operation();
+	P1OUT ^= BIT1+BIT2;
+	P2OUT ^= BIT3;
 }
 

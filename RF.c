@@ -1,13 +1,40 @@
 #include "RF.h"
 
 
+void WriteToTxBuffer(ADDRESS, Data)
+{
+	TxBuffer[0] = ADDRESS;
+	append(TxBuffer, Data);
+}
+
+void  append(unsigned char s[], unsigned char c) {
+     unsigned int len = sizeof(s);
+     s[len] = c;
+     s[len+1] = '\0';
+}
+
+void Send_Data(ADDRESS, Data)
+{
+	const unsigned char TxBuffer[PACKET_LEN]={0x00,0x00,0x00,0x00,0x00};
+
+	WriteToTxBuffer(ADDRESS, Data);
+
+	ReceiveOff();
+	receiving = 0;
+
+	Transmit( (unsigned char*)TxBuffer, sizeof TxBuffer);
+	transmitting = 1;
+}
+
+
+
+
 
 void init_RF(void){
 	// Increase PMMCOREV level to 2 for proper radio operation
 	SetVCore(2);
 	ResetRadioCore();
 	InitRadio();
-	InitButtonLeds();
 
 	ReceiveOn();
 	receiving = 1;
@@ -15,6 +42,7 @@ void init_RF(void){
 
 unsigned char *Receive_data(unsigned char ADDRESS){
 	// Contact Cedric for errors
+
 	// Check for ADDRESS:
 	// If ADDRESS = Correct:
 	//		Return contents of RxBuffer
@@ -43,30 +71,6 @@ unsigned char *Receive_data(unsigned char ADDRESS){
         return 0;
 }
 
-void InitButtonLeds(void)
-{
-  // Set up the button as interruptible
-  P1DIR &= ~BIT7;
-  P1REN |= BIT7;
-  P1IES &= BIT7;
-  P1IFG = 0;
-  P1OUT |= BIT7;
-  P1IE  |= BIT7;
-
-  // Initialize Port J
-  PJOUT = 0x00;
-  PJDIR = 0xFF;
-
-  // Set up LEDs
-  P1DIR |= BIT0;					// Set P1.0 to output direction
-  P2DIR |= BIT3;
-  P2DIR |= BIT6;
-  P2DIR |= BIT7;
-  P1OUT &= ~BIT0;
-  P2OUT &= ~BIT6;
-  P2OUT &= ~BIT3;
-  P2OUT &= ~BIT7;
-}
 
 void InitRadio(void)
 {
@@ -79,27 +83,6 @@ void InitRadio(void)
   WriteRfSettings(&rfSettings);
 
   WriteSinglePATable(PATABLE_VAL);
-}
-
-#pragma vector=PORT1_VECTOR
-__interrupt void PORT1_ISR(void)
-{
-  switch(__even_in_range(P1IV, 16))
-  {
-    case  0: break;
-    case  2: break;                         // P1.0 IFG
-    case  4: break;                         // P1.1 IFG
-    case  6: break;                         // P1.2 IFG
-    case  8: break;                         // P1.3 IFG
-    case 10: break;                         // P1.4 IFG
-    case 12: break;                         // P1.5 IFG
-    case 14: break;                         // P1.6 IFG
-    case 16:                                // P1.7 IFG
-      P1IE = 0;                             // Debounce by disabling buttons
-      buttonPressed ++;
-      __bic_SR_register_on_exit(LPM3_bits); // Exit active
-      break;
-  }
 }
 
 void Transmit(unsigned char *buffer, unsigned char length)
