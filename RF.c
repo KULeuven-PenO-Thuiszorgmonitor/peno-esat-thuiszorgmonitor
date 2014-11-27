@@ -133,7 +133,6 @@ __interrupt void CC1101_ISR(void)
     case 20:                                // RFIFG9
       if(receiving)			    // RX end of packet
       {
-    	  // Contact Cedric for errors
     	  	// Check for ADDRESS:
     	  	// If ADDRESS = Correct:
     	  	//		Return contents of RxBuffer
@@ -151,13 +150,13 @@ __interrupt void CC1101_ISR(void)
     	      if(RxBuffer[CRC_LQI_IDX] && CRC_OK){
     	      	// Check to see if the ADDRESS is correct)
     	      	if(RxBuffer[0] && ADDRESS){
-    	      		for(i = PACKET_LEN+1; i > 0; i--){
-    	      			Received_data[i] = RxBuffer[i];
+    	      		transmitting = 1;
     	          	}
-    	          }
-    	      }
-    	  }
-
+    	      	else {
+    	      		break;
+    	      		}
+    	        }
+      }
       else if(transmitting)		    // TX end of packet
       {
         RF1AIE &= ~BIT9;                    // Disable TX end-of-packet interrupt
