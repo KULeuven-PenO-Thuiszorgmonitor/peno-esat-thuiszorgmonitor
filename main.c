@@ -4,6 +4,7 @@
 
 #include "UART.h"
 #include "WDT.h"
+#include "RF.h"
 
 
 int main(void){
@@ -12,9 +13,11 @@ int main(void){
 	init_ADC(); 							// initialiseer de ADC
 	init_UART(); 							// initialiseer de UART
 	init_LED(); 							// initialiseer de LED's
+	init_RF();								// initialiseer de radio
 	send = 0;
 	ADC12CTL0 |= ADC12SC; 					// Start sampling/conversion
 	ADCcounter=0;
+
 	while (ADCcounter<400){
 
 		__bis_SR_register(GIE); 			// LPM0, ADC12_ISR will force exit
