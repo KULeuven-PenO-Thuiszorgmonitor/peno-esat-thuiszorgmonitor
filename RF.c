@@ -125,16 +125,7 @@ __interrupt void CC1101_ISR(void)
     case 20:                                // RFIFG9
       if(receiving)			    // RX end of packet
       {
-        // Read the length byte from the FIFO
-        RxBufferLength = ReadSingleReg( RXBYTES );
-        ReadBurstReg(RF_RXFIFORD, RxBuffer, RxBufferLength);
-
-        // Stop here to see contents of RxBuffer
-        __no_operation();
-
-        // Check the CRC results
-        if(RxBuffer[CRC_LQI_IDX] & CRC_OK)
-        	P1OUT ^= BIT0;
+    	  Receive_data(RxBuffer, ADDRESS, Received_data)
       }
       else if(transmitting)		    // TX end of packet
       {
