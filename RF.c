@@ -36,7 +36,7 @@ void init_RF(void){
 	transmitting = 0;
 }
 
-unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsigned char* Received_data){
+/* unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsigned char* Received_data){
 	// Contact Cedric for errors
 	// Check for ADDRESS:
 	// If ADDRESS = Correct:
@@ -62,7 +62,7 @@ unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsi
     }
     return 0;
 }
-
+*/
 
 void InitRadio(void)
 {
@@ -172,7 +172,22 @@ __interrupt void CC1101_ISR(void)
     case 20:                                // RFIFG9
       if(receiving)			    // RX end of packet
       {
-    	  Receive_data(RxBuffer, ADDRESS, Received_data);
+    	  volatile unsigned i;
+    	  // Read the length byte from the FIFO
+    	  	  RxBufferLength = ReadSingleReg( RXBYTES );
+    	  	  ReadBurstReg(RF_RXFIFORD, RxBuffer, RxBufferLength);
+    	  // Stop here to see contents of RxBuffer
+    	  	  __no_operation();
+    	  // Check the CRC results
+    	  	  volatile int i;
+    	  	  if(RxBuffer[CRC_LQI_IDX] && CRC_OK){
+    	      	// Check to see if the ADDRESS is correct)
+    	      	if(RxBuffer[0] && ADDRESS){
+    	      		for(i = PACKET_LEN+1; i > 0; i--){
+    	      			Received_data[i] = RxBuffer[i];
+    	          	}
+    	        }
+    	      }
       }
       else if(transmitting)		    // TX end of packet
       {
