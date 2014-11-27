@@ -348,7 +348,7 @@ void opdrachtsend(unsigned char reslijst[LENGTERES+1], unsigned char result[4][8
     char tekst[]="xxxx";
     srand((unsigned) time(&t));
     
-    
+
     for(i=0;i<LENGTERES;i++){
     data[i/4][i%4]= reslijst[i];
 }

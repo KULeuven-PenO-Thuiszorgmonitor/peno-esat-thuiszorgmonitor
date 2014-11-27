@@ -37,8 +37,8 @@ void init_RF(void){
 	receiving = 1;
 	transmitting = 0;
 }
-/*
- * weggecommentarieerd voor veiligheid. momenteel nutteloos...
+
+ /* weggecommentarieerd voor veiligheid. momenteel nutteloos...
 unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsigned char* Received_data){
 	// Contact Cedric for errors
 	// Check for ADDRESS:
@@ -219,7 +219,7 @@ __interrupt void CC1101_ISR(void)
     	      		for(i = PACKET_LEN+1; i > 0; i--){
     	      			Received_data[i] = RxBuffer[i];
     	          	}
-    	          }
+    	        }
     	      }
     	  }
 
