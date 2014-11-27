@@ -1,5 +1,8 @@
 #include "RF.h"
 
+#define VERSIE 1
+
+
 void append(unsigned char* array_in, unsigned char address, unsigned char* array_out) {
      //unsigned int len = sizeof(s);
 	array_out[0] = address;
@@ -107,6 +110,8 @@ void ReceiveOff(void)
   Strobe( RF_SFRX  );
 }
 
+#if VERSIE == 1
+
 #pragma vector=CC1101_VECTOR
 __interrupt void CC1101_ISR(void)
 {
@@ -125,7 +130,7 @@ __interrupt void CC1101_ISR(void)
     case 20:                                // RFIFG9
       if(receiving)			    // RX end of packet
       {
-    	  Receive_data(RxBuffer, ADDRESS, Received_data)
+    	  Receive_data(RxBuffer, ADDRESS, Received_data);
       }
       else if(transmitting)		    // TX end of packet
       {
@@ -144,3 +149,46 @@ __interrupt void CC1101_ISR(void)
   }
   __bic_SR_register_on_exit(LPM3_bits);
 }
+
+
+
+#elif VERSIE==2
+
+#pragma vector=CC1101_VECTOR
+__interrupt void CC1101_ISR(void)
+{
+  switch(__even_in_range(RF1AIV,32))        // Prioritizing Radio Core Interrupt
+  {
+    case  0: break;                         // No RF core interrupt pending
+    case  2: break;                         // RFIFG0
+    case  4: break;                         // RFIFG1
+    case  6: break;                         // RFIFG2
+    case  8: break;                         // RFIFG3
+    case 10: break;                         // RFIFG4
+    case 12: break;                         // RFIFG5
+    case 14: break;                         // RFIFG6
+    case 16: break;                         // RFIFG7
+    case 18: break;                         // RFIFG8
+    case 20:                                // RFIFG9
+      if(receiving)			    // RX end of packet
+      {
+    	  Receive_data(RxBuffer, ADDRESS, Received_data);
+      }
+      else if(transmitting)		    // TX end of packet
+      {
+        RF1AIE &= ~BIT9;                    // Disable TX end-of-packet interrupt
+        P2OUT &= ~BIT6;                     // Turn off LED after Transmit
+        transmitting = 0;
+      }
+      else while(1); 			    // trap
+      break;
+    case 22: break;                         // RFIFG10
+    case 24: break;                         // RFIFG11
+    case 26: break;                         // RFIFG12
+    case 28: break;                         // RFIFG13
+    case 30: break;                         // RFIFG14
+    case 32: break;                         // RFIFG15
+  }
+  __bic_SR_register_on_exit(LPM3_bits);
+}
+#endif
