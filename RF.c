@@ -8,7 +8,7 @@
 void append(unsigned char* array_in, unsigned char address, unsigned char* array_out) {
      //unsigned int len = sizeof(s);
 	array_out[0] = address;
-	int i2;
+	unsigned int i2;
      for (i2=1; i2< PACKET_LEN+1; i2++) {
     	 array_out[i2] = array_in[i2-1];
      }
@@ -196,7 +196,6 @@ __interrupt void CC1101_ISR(void)
     case 20:                                // RFIFG9
       if(receiving)			    // RX end of packet
       {
-    	  // Contact Cedric for errors
     	  	// Check for ADDRESS:
     	  	// If ADDRESS = Correct:
     	  	//		Return contents of RxBuffer
