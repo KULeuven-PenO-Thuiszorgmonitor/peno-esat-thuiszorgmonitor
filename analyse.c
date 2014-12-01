@@ -1,19 +1,19 @@
 
-int analyse1(double* pox)
+int analyse1(int pox)
 {
     int fs= 100;
-//    double pox[] = {}
-    int lengte = sizeof(pox)/sizeof(double);
+//    int pox[] = {}
+    int lengte = sizeof(pox)/sizeof(int);
 
     /* Afgeleide */
     int l=0;
 	for (l;l<lengte-1;l++){
         pox[l]=pox[l+1]-pox[l];
     }
-    lengte = sizeof(pox)/sizeof(double)-1;
+    lengte = sizeof(pox)/sizeof(int)-1;
     /* Window moving integrator */
 	int r=0;
-	double pox2[1000] = {0};
+	int pox2[1000] = {0};
 	for (r; r<lengte; r++ ) {
         double som = 0;
 		if (r < 20){
@@ -37,7 +37,7 @@ int analyse1(double* pox)
 		}
         som = 0;
     }
-    lengte = sizeof(pox)/sizeof(double);
+    lengte = sizeof(pox)/sizeof(int);
 
     /* Instellen van de variabelen */
     int t=0,u=0,x[6]={0};
