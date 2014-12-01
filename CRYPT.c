@@ -331,7 +331,7 @@ void addblock(unsigned char data[4][4], unsigned char data2[4][4])
 
 void pelican(unsigned char code[4][4], unsigned char tekst[], unsigned char data[4][4])
 {	int row, column;
-	int length, ch, nofinish;
+	int ch, nofinish;
 	unsigned char data2[4][4];
 
 	for (row=0; row<4; row++)
@@ -379,7 +379,6 @@ void opdrachtsend(unsigned char reslijst[LENGTERES+1], unsigned char result[4][8
     {0x00u, 0x00u, 0x00u, 0x00u}};
 
     unsigned char datamac[4][4];
-    char tekst[]="xxxx";
     srand((unsigned) time(&t));
     
 

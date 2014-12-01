@@ -1,6 +1,7 @@
 #include <msp430.h>
 #include "../initialisatie.h"
 #include "../UART.h"
+volatile char j = 0;
 
 void init_ADC(void){
 	P2SEL |= BIT0; 						// P2.0 ADC option select
@@ -28,9 +29,22 @@ __interrupt void ADC12_ISR(void)
   case  2: break;                           // Vector  2:  ADC overflow
   case  4: break;                           // Vector  4:  ADC timing overflow
   case  6:									// Vector  6:  ADC12IFG0
-	  result[ADCcounter]=ADC12MEM0;
-	  ADCcounter+=1;
-   // adcgeheugen=ADC12MEM0;
+//	  result[ADCcounter]=ADC12MEM0;
+//	  ADCcounter+=1;
+
+
+	if(!ADCcounter%2){
+		to_encrypt[j]  =result[ADCcounter]>>4;
+		to_encrypt[j+1]=result[ADCcounter]<<4;
+		j++;
+	}else{
+		to_encrypt[j] +=result[ADCcounter]>>8;
+		to_encrypt[j+1]=result[ADCcounter];
+		j+=2;
+	}
+
+
+	  // adcgeheugen=ADC12MEM0;
 	//result[0]=adcgeheugen;
 	//result[1]=adcgeheugen>>8;
 	//if (send){
