@@ -12,6 +12,9 @@
 #include "UART.h"
 #include "WDT.h"
 #include "RF.h"
+#include "analyse.h"
+#include "CRYPT.h"
+
 int main(void){
 	volatile unsigned int i; 				// volatile voor de compiler
 	WDT_select();
@@ -27,17 +30,21 @@ int main(void){
 			__no_operation(); 					// For debugger
 		}
 		ADC12CTL0 ^= ADC12SC; 					// Stop sampling/conversion
-
-
-
-
+		hartslag[0] = analyse1(result);
+		opdrachtsend(hartslag, matrix);
+		matrix2list(matrix,to_send);
 	}
 }
+
+
 #elif VERSIE == 10
 #include "sensoren/ADC1.h"
 #include "UART.h"
 #include "WDT.h"
 #include "RF.h"
+#include "analyse.h"
+#include "CRYPT.h"
+
 int main(void){
 	volatile unsigned int i; 				// volatile voor de compiler
 	WDT_select();
@@ -63,6 +70,19 @@ int main(void){
 #endif
 
 
+void matrix2list(char* input[4][8],char* output[32]){
+	volatile int j;
+	for(i=0;i<4;i++){
+		for(j=0;j<8;j++){
+			output[8*i+j] = input[i][j];
+		}
+	}
+}
+void list2matrix(char* input[32],char* output[4][8]){
+    for(i=0;i<32;i++){
+    	output[i/4][i%4]= input[i];
+    }
+}
 
 
 void init_LED(void){
