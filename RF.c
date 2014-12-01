@@ -1,7 +1,7 @@
 #include "RF.h"
 
 unsigned char TO_BE_CHANGED[PACKET_LEN];		//DIT IS TIJDELIJK, MOET VERVANGEN WORDEN DOOR DE DATA DIE VERZONDEN MOET WORDEN DOOR DE SLAVES
-#define VERSIE 4
+#define VERSIE 2
 
 // VERSIE 1 == SLAVE PULSOXY, 	ADDRESS = 0x01
 // VERSIE 2 == MASTER, 			ADDRESS = 0x04, ADDRESS_MASTER = 0x04
@@ -204,7 +204,6 @@ __interrupt void CC1101_ISR(void)
       else if(transmitting)		    // TX end of packet
       {
         RF1AIE &= ~BIT9;                    // Disable TX end-of-packet interrupt
-        P2OUT &= ~BIT6;                     // Turn off LED after Transmit
         transmitting = 0;
       }
       else while(1); 			    // trap
@@ -268,7 +267,6 @@ __interrupt void CC1101_ISR(void)
       else if(transmitting)		    // TX end of packet
       {
         RF1AIE &= ~BIT9;                    // Disable TX end-of-packet interrupt
-        P2OUT &= ~BIT6;                     // Turn off LED after Transmit
         transmitting = 0;
       }
       else while(1); 			    // trap
