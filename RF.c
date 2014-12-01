@@ -1,9 +1,12 @@
 #include "RF.h"
 
-#define VERSIE 1
+unsigned char TO_BE_CHANGED[PACKET_LEN];		//DIT IS TIJDELIJK, MOET VERVANGEN WORDEN DOOR DE DATA DIE VERZONDEN MOET WORDEN DOOR DE SLAVES
+#define VERSIE 4
 
-// VERSIE 1 == SLAVE
-// VERSIE 2 == MASTER
+// VERSIE 1 == SLAVE PULSOXY, 	ADDRESS = 0x01
+// VERSIE 2 == MASTER, 			ADDRESS = 0x04, ADDRESS_MASTER = 0x04
+// VERSIE 3 == SLAVE ECG, 		ADDRESS = 0x02
+// VERSIE 4 == SLAVE ZOOL, 		ADDRESS = 0x03
 
 void append(unsigned char* array_in, unsigned char address, unsigned char* array_out) {
      //unsigned int len = sizeof(s);
@@ -27,6 +30,7 @@ void Send_Data(unsigned char ADDRESS, unsigned char* Data)
 	transmitting = 1;
 }
 
+# if VERSIE == 1
 void init_RF(void){
 	// Increase PMMCOREV level to 2 for proper radio operation
 	SetVCore(2);
@@ -36,7 +40,48 @@ void init_RF(void){
 	ReceiveOn();
 	receiving = 1;
 	transmitting = 0;
+	ADDRESS = 0x01;
 }
+
+#elif VERSIE == 2
+void init_RF(void){
+	// Increase PMMCOREV level to 2 for proper radio operation
+	SetVCore(2);
+	ResetRadioCore();
+	InitRadio();
+
+	ReceiveOn();
+	receiving = 1;
+	transmitting = 0;
+	ADDRESS = 0x04;
+}
+
+#elif VERSIE == 3
+void init_RF(void){
+	// Increase PMMCOREV level to 2 for proper radio operation
+	SetVCore(2);
+	ResetRadioCore();
+	InitRadio();
+
+	ReceiveOn();
+	receiving = 1;
+	transmitting = 0;
+	ADDRESS = 0x02;
+}
+
+#elif VERSIE == 4
+void init_RF(void){
+	// Increase PMMCOREV level to 2 for proper radio operation
+	SetVCore(2);
+	ResetRadioCore();
+	InitRadio();
+
+	ReceiveOn();
+	receiving = 1;
+	transmitting = 0;
+	ADDRESS = 0x03;
+}
+#endif
 
  /* weggecommentarieerd voor veiligheid. momenteel nutteloos...
 unsigned char* Receive_data(unsigned char* RxBuffer, unsigned char ADDRESS, unsigned char* Received_data){
@@ -113,7 +158,7 @@ void ReceiveOff(void)
   Strobe( RF_SFRX  );
 }
 
-#if VERSIE == 1
+#if VERSIE == 1 || VERSIE == 3 || VERSIE == 4
 
 #pragma vector=CC1101_VECTOR
 __interrupt void CC1101_ISR(void)
@@ -135,7 +180,7 @@ __interrupt void CC1101_ISR(void)
       {
     	  	// Check for ADDRESS:
     	  	// If ADDRESS = Correct:
-    	  	//		Return contents of RxBuffer
+    	  	//		Set transmitting = 1
     	  	// If ADDRESS = False:
     	  	//		Break
     	  // Read the length byte from the FIFO
@@ -149,7 +194,7 @@ __interrupt void CC1101_ISR(void)
     	      if(RxBuffer[CRC_LQI_IDX] && CRC_OK){
     	      	// Check to see if the ADDRESS is correct)
     	      	if(RxBuffer[0] && ADDRESS){
-    	      		transmitting = 1;
+    	      		Send_Data(ADDRESS_MASTER,TO_BE_CHANGED);
     	          	}
     	      	else {
     	      		break;

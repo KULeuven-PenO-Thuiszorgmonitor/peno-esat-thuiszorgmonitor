@@ -43,6 +43,7 @@ unsigned char transmitting;
 unsigned char receiving;
 
 unsigned char ADDRESS;
+unsigned char ADDRESS_MASTER;
 unsigned char Data[PACKET_LEN];
 unsigned char Received_data[PACKET_LEN];
 
