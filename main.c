@@ -1,12 +1,9 @@
-#define VERSIE 10
-//1:hartslagmonitor analyse
-//10:hartslagmonitor ruw
-
+#include "defines.h"
 #include <msp430.h>
 #include "initialisatie.h"
 
-#if VERSIE == 0
-#elif VERSIE ==1
+#if SENSOR_VERSIE == 0
+#elif SENSOR_VERSIE ==1
 
 #include "sensoren/ADC1.h"
 #include "UART.h"
@@ -39,7 +36,7 @@ int main(void){
 }
 
 
-#elif VERSIE == 10
+#elif SENSOR_VERSIE == 10
 #include "sensoren/ADC1.h"
 #include "UART.h"
 #include "WDT.h"

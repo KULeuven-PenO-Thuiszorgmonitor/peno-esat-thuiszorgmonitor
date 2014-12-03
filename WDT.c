@@ -1,9 +1,8 @@
-#define versie 1
 #include "WDT.h"
-
+#include "defines.h"
 
 void WDT_select(void){
-#if versie == 1
+#if WDT_VERSIE == 1
 	WDTCTL = (WDTPW+WDTTMSEL+WDTCNTCL+ 0x0003);// WDT ..ms, SMCLK, interval timer
 	SFRIE1 |= WDTIE;                          // Enable WDT interrupt
 	__bis_SR_register(GIE);					  // Enable algemene interrupts

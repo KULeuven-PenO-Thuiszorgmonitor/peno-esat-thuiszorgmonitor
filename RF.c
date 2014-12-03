@@ -1,12 +1,7 @@
 #include "RF.h"
+#include "defines.h"
 
 unsigned char TO_BE_CHANGED[PACKET_LEN];		//DIT IS TIJDELIJK, MOET VERVANGEN WORDEN DOOR DE DATA DIE VERZONDEN MOET WORDEN DOOR DE SLAVES
-#define VERSIE 2
-
-// VERSIE 1 == SLAVE PULSOXY, 	ADDRESS = 0x01
-// VERSIE 2 == MASTER, 			ADDRESS = 0x04, ADDRESS_MASTER = 0x04
-// VERSIE 3 == SLAVE ECG, 		ADDRESS = 0x02
-// VERSIE 4 == SLAVE ZOOL, 		ADDRESS = 0x03
 
 void append(unsigned char* array_in, unsigned char address, unsigned char* array_out) {
      //unsigned int len = sizeof(s);
@@ -30,7 +25,7 @@ void Send_Data(unsigned char ADDRESS, unsigned char* Data)
 	transmitting = 1;
 }
 
-# if VERSIE == 1
+# if RF_VERSIE == 1
 void init_RF(void){
 	// Increase PMMCOREV level to 2 for proper radio operation
 	SetVCore(2);
@@ -43,7 +38,7 @@ void init_RF(void){
 	ADDRESS = 0x01;
 }
 
-#elif VERSIE == 2
+#elif RF_VERSIE == 2
 void init_RF(void){
 	// Increase PMMCOREV level to 2 for proper radio operation
 	SetVCore(2);
@@ -56,7 +51,7 @@ void init_RF(void){
 	ADDRESS = 0x04;
 }
 
-#elif VERSIE == 3
+#elif RF_VERSIE == 3
 void init_RF(void){
 	// Increase PMMCOREV level to 2 for proper radio operation
 	SetVCore(2);
@@ -69,7 +64,7 @@ void init_RF(void){
 	ADDRESS = 0x02;
 }
 
-#elif VERSIE == 4
+#elif RF_VERSIE == 4
 void init_RF(void){
 	// Increase PMMCOREV level to 2 for proper radio operation
 	SetVCore(2);
@@ -158,7 +153,7 @@ void ReceiveOff(void)
   Strobe( RF_SFRX  );
 }
 
-#if VERSIE == 1 || VERSIE == 3 || VERSIE == 4
+#if RF_VERSIE == 1 || RF_VERSIE == 3 || RF_VERSIE == 4
 
 #pragma vector=CC1101_VECTOR
 __interrupt void CC1101_ISR(void)
@@ -220,7 +215,7 @@ __interrupt void CC1101_ISR(void)
 
 
 
-#elif VERSIE==2
+#elif RF_VERSIE==2
 
 #pragma vector=CC1101_VECTOR
 __interrupt void CC1101_ISR(void)

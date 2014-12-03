@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include "defines.h"
 
 
 
@@ -37,7 +37,7 @@ unsigned char key[4][44];
 
 void opdrachtreceive(unsigned char result[4][8], unsigned char tekst[8]);
 
-#define LENGTERES 15 //versie 1 -> waarde = 1 |versie 10 -> waarde = 15
+
 
 void opdrachtsend(unsigned char reslijst[LENGTERES+1], unsigned char result[4][8]);
 
