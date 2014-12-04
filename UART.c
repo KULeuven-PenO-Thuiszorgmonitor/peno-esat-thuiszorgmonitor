@@ -22,14 +22,14 @@ void init_UART(void){
 }
 
 
-void send_UART0(void){
+void send_UART0(unsigned char* to_UART){
 	volatile unsigned int i; 									// volatile voor de compiler
 	volatile unsigned char index;								// index en i zijn iteratievariabelen
 
-	for(index = 0; index < sizeof(result)/sizeof(char); index++){
+	for(index = 0; index < sizeof(to_UART)/sizeof(char); index++){
 		//i=20000;while (i>0){i--;} 								// even wachten
 		while (!(UCA0IFG&UCTXIFG)); 							// USCI_A0 TX buffer ready?
-		UCA0TXBUF = result[index]; 								// stuur data
+		UCA0TXBUF = to_UART[index]; 								// stuur data
 		P1OUT ^= BIT0; 											// switch led
 	}
 }

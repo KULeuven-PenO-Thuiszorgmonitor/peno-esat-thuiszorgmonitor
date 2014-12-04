@@ -5,7 +5,7 @@
 #include "defines.h"
 #include <msp430.h>
 
-RESULT_TYPE result[400]; // fix dit char bij ver10. char nodig voor bitsshift en grootte is 10
+RESULT_TYPE result[2]; // fix dit char bij ver10. char nodig voor bitsshift en grootte is 10.. MEESTAL 400!!
 volatile unsigned int send;
 volatile unsigned int ADCcounter;
 unsigned char hartslag[1];

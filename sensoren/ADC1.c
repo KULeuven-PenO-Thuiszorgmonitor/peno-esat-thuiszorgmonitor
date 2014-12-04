@@ -1,6 +1,7 @@
 #include <msp430.h>
 #include "../initialisatie.h"
 #include "ADC1.h"
+#include "../UART.h"
 volatile char j = 0;
 
 void init_ADC(void){
@@ -45,16 +46,16 @@ __interrupt void ADC12_ISR(void)
 		to_encrypt[j+1]=adcgeheugen;
 		j+=2;
 	}
-#endif
 
-	  // adcgeheugen=ADC12MEM0;
-	//result[0]=adcgeheugen;
-	//result[1]=adcgeheugen>>8;
-	//if (send){
-	//	send_UART();					// verzend de data
-	//}
+#elif ADC_VERSIE ==3
+	adcgeheugen=ADC12MEM0;
+	result[0]=adcgeheugen;
+	result[1]=adcgeheugen>>8;
+	if (send){
+	send_UART0(result);					// verzend de data
+	}
   //  __bic_SR_register_on_exit(LPM0_bits);   // Exit active CPU
-
+#endif
   case  8: break;                           // Vector  8:  ADC12IFG1
   case 10: break;                           // Vector 10:  ADC12IFG2
   case 12: break;                           // Vector 12:  ADC12IFG3

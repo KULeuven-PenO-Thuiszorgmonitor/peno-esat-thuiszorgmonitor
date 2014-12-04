@@ -95,8 +95,41 @@ int main(void){
 	matrix2list(matrix,to_send);
 	//verzending
 }
+
+
+#elif SENSOR_VERSIE == 90
+#include "sensoren/ADC1.h"
+#include "UART.h"
+#include "WDT.h"
+#include "RF.h"
+#include "analyse.h"
+#include "CRYPT.h"
+
+int main(void){
+	volatile unsigned int i; 				// volatile voor de compiler
+	WDT_select();
+	init_ADC(); 							// initialiseer de ADC
+	init_UART(); 							// initialiseer de UART
+	init_LED(); 							// initialiseer de LED's
+	init_RF();								// initialiseer de radio
+	send = 0;
+	ADCcounter=0;
+	ADC12CTL0 |= ADC12SC; 					// Start sampling/conversion
+	while(1){
+		while (ADCcounter<10){
+		__bis_SR_register(GIE); 			// LPM0, ADC12_ISR will force exit
+		__no_operation(); 					// For debugger
+		}
+	ADCcounter=0;
+	send_UART0(to_encrypt);
+	}
+
+
+	//verzending
+}
 #else
 #endif
+
 
 
 void matrix2list(unsigned char input[4][8],unsigned char output[32]){

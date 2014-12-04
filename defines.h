@@ -12,7 +12,7 @@
  * 2 is result char   , opsplitsen van meetdata
  */
 
-#define SENSOR_VERSIE 9
+#define SENSOR_VERSIE 90
 
 #if SENSOR_VERSIE == 1
 #define WDT_VERSIE 1
@@ -29,12 +29,20 @@
 #elif SENSOR_VERSIE == 9
 #define LENGTERES 1
 #define ADC_VERSIE 1
+
+
+#elif SENSOR_VERSIE == 90
+#define LENGTERES 2
+#define ADC_VERSIE 3
 #endif
+
 
 #if ADC_VERSIE == 1
 #define RESULT_TYPE int
 #elif ADC_VERSIE == 2
 #define RESULT_TYPE char
+#elif ADC_VERSIE == 3
+#define RESULT_TYPE unsigned char
 
 
 #else
