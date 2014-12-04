@@ -6,19 +6,19 @@ int analyse1(int* pox)
     int lengte = sizeof(pox)/sizeof(int);
 
     /* Afgeleide */
-    int l=0;
-	for (l;l<lengte-1;l++){
+    int l;
+	for (l=0;l<lengte-1;l++){
         pox[l]=pox[l+1]-pox[l];
     }
     lengte = sizeof(pox)/sizeof(int)-1;
     /* Window moving integrator */
-	int r=0;
+	int r;
 	int pox2[1000] = {0};
-	for (r; r<lengte; r++ ) {
+	for (r=0; r<lengte; r++ ) {
         double som = 0;
 		if (r < 20){
-            int q = 0;
-            for (q;q<r;q++){
+            int q ;
+            for (q= 0;q<r;q++){
 				som=som+pox[q];
             }
             if (r>1){
@@ -29,8 +29,8 @@ int analyse1(int* pox)
             }
 		}
 		if (r>=20) {
-            int q = r-20;
-            for(q;q<r;q++){
+            int q ;
+            for(q= r-20;q<r;q++){
                 som=pox[q]+som;
             }
             pox2[r] = som/20;
@@ -40,25 +40,25 @@ int analyse1(int* pox)
     lengte = sizeof(pox)/sizeof(int);
 
     /* Instellen van de variabelen */
-    int t=0,u=0,x[6]={0};
+    int t,u,x[6]={0};
 	double y[6]={0};
 	float max = 0;
-    int index = 1,toestand = 0, z = 0, size = 0;
+    int index = 1,toestand = 0, z , size = 0;
 	float maximum1 =0, maximum2 = 0;
 	float ggetal = 0;
 	int getal = 0;
 
 	/* Opstellen van de drempelwaarde = threshold */
-	for (u;u<2*fs;u++){
+	for (u=0;u<2*fs;u++){
 		if (pox2[u]>=max){
 			max=pox2[u];
         }
 	}
 	double threshold = 0.7*max;
     /* De uiteindelijke lus voor het vinden van de pieken */
-	for (t;t<lengte;t++){
+	for (t=0;t<lengte;t++){
 
-	    for (z;z<4;z++){
+	    for (z= 0;z<4;z++){
 	        if (x[z] != 0 && x[z+1]==0) {
                 size = z;
 	        }

@@ -4,6 +4,6 @@
 #include<stdio.h>
 #include<string.h>
 #include<math.h>
-int analyse1(double* pox);
+int analyse1(int* pox);
 
 #endif /* ANALYSE_H_ */

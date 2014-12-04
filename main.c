@@ -1,5 +1,3 @@
-#include "defines.h"
-#include <msp430.h>
 #include "initialisatie.h"
 
 #if SENSOR_VERSIE == 0
@@ -28,7 +26,8 @@ int main(void){
 		}
 		ADC12CTL0 ^= ADC12SC; 					// Stop sampling/conversion
 		ADCcounter = 0;
-		hartslag[0] = analyse1(result);
+		int uitkomst_analyse =  analyse1(result);
+		hartslag[0] = (char) uitkomst_analyse;
 		opdrachtsend(hartslag, matrix);
 		matrix2list(matrix,to_send);
 		//verzending
@@ -97,6 +96,22 @@ void list2matrix(char input[32],char output[4][8]){
 //		}
 //	}
 //}
+
+void bit8_2_bitC(char b[15],char a[10]){
+	volatile char i;
+	volatile char j=0;
+		for (i=0;i<10;i++){
+			if(!i%2){
+				b[j]  =a[i]>>4;
+				b[j+1]=a[i]<<4;
+				j++;
+			}else{
+				b[j] +=a[i]>>8;
+				b[j+1]=a[i];
+				j+=2;
+			}
+		}
+}
 
 void init_LED(void){
 	P1DIR |= BIT0+BIT1+BIT2; 			// P1.0 output (LED)

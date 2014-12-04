@@ -29,10 +29,12 @@ __interrupt void ADC12_ISR(void)
   case  2: break;                           // Vector  2:  ADC overflow
   case  4: break;                           // Vector  4:  ADC timing overflow
   case  6:									// Vector  6:  ADC12IFG0
-//	  result[ADCcounter]=ADC12MEM0;
-//	  ADCcounter+=1;
+#if ADC_VERSIE == 1
 
+	  result[ADCcounter]=ADC12MEM0;
+	  ADCcounter+=1;
 
+#elif ADC_VERSIE ==2
 	if(!ADCcounter%2){
 		to_encrypt[j]  =result[ADCcounter]>>4;
 		to_encrypt[j+1]=result[ADCcounter]<<4;
@@ -42,7 +44,7 @@ __interrupt void ADC12_ISR(void)
 		to_encrypt[j+1]=result[ADCcounter];
 		j+=2;
 	}
-
+#endif
 
 	  // adcgeheugen=ADC12MEM0;
 	//result[0]=adcgeheugen;

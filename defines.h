@@ -6,21 +6,35 @@
  * Versie 10: hartslagmonitor, exclusief analyse van data
  */
 
+/*
+ * ADC_VERSIE's:
+ * 1 is result integer, niet splitsen van meetdata
+ * 2 is result char   , opsplitsen van meetdata
+ */
+
 #define SENSOR_VERSIE 10
 
 #if SENSOR_VERSIE == 1
 #define WDT_VERSIE 1
 #define LENGTERES 1
+#define ADC_VERSIE 1
 
 #elif SENSOR_VERSIE == 10
 #define LENGTERES 15
 #define WDT_VERSIE 1
+#define ADC_VERSIE 2
 
 #elif SENSOR_VERSIE == 2
 
 #endif
 
-
+#if ADC_VERSIE == 1
+#define RESULT_TYPE int
+#elif ADC_VERSIE == 2
+#define RESULT_TYPE char
+#else
+#define RESULT_TYPE int
+#endif
 
 #define RF_VERSIE 2
 

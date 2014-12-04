@@ -2,7 +2,10 @@
 #define INITIALISATIE_H_
 
 
-char result[400]; // fix dit char bij ver10. char nodig voor bitsshift en grootte is 10
+#include "defines.h"
+#include <msp430.h>
+
+RESULT_TYPE result[400]; // fix dit char bij ver10. char nodig voor bitsshift en grootte is 10
 volatile unsigned int adcgeheugen;
 volatile unsigned int send;
 volatile unsigned int ADCcounter;
