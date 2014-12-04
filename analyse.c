@@ -1,5 +1,5 @@
 
-int analyse1(int pox)
+int analyse1(int* pox)
 {
     int fs= 100;
 //    int pox[] = {}
