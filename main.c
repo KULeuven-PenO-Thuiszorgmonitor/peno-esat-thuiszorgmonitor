@@ -25,7 +25,9 @@ int main(void){
 		ADC12CTL0 ^= ADC12SC; 					// Stop sampling/conversion
 		ADCcounter = 0;
 		int uitkomst_analyse =  analyse1(result);
-
+		if (send){
+			send_UART(uitkomst_analyse);
+		}
 
 		//verzending
 	}

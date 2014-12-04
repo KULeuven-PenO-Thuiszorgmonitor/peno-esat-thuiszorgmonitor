@@ -27,7 +27,6 @@
 #elif SENSOR_VERSIE == 2
 
 #elif SENSOR_VERSIE == 9
-#define WDT_VERSIE 1
 #define LENGTERES 1
 #define ADC_VERSIE 1
 #endif
