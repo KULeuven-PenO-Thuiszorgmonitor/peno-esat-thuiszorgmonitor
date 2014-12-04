@@ -3,5 +3,6 @@
 
 void init_ADC(void);
 __interrupt void ADC12_ISR(void);
+int adcgeheugen;
 
 #endif /* ADC1_H_ */

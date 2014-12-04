@@ -35,7 +35,7 @@ void resetkey(void);
 volatile char t;
 unsigned char key[4][44];
 
-void opdrachtreceive(unsigned char result[4][8], unsigned char tekst[8]);
+void opdrachtreceive(unsigned char result[4][8], unsigned char tekst[LENGTERES+1]);
 
 
 

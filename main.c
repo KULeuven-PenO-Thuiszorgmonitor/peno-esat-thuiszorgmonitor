@@ -1,6 +1,36 @@
 #include "initialisatie.h"
 
-#if SENSOR_VERSIE == 0
+#if SENSOR_VERSIE == 9
+#include "sensoren/ADC1.h"
+#include "UART.h"
+#include "WDT.h"
+#include "RF.h"
+#include "analyse.h"
+#include "CRYPT.h"
+
+int main(void){
+	volatile unsigned int i; 				// volatile voor de compiler
+	WDT_select();
+	init_ADC(); 							// initialiseer de ADC
+	init_UART(); 							// initialiseer de UART
+	init_LED(); 							// initialiseer de LED's
+	send = 0;
+	ADCcounter=0;
+	while(1){
+		ADC12CTL0 |= ADC12SC; 					// Start sampling/conversion
+		while (ADCcounter<400){
+			__bis_SR_register(GIE); 			// LPM0, ADC12_ISR will force exit
+			__no_operation(); 					// For debugger
+		}
+		ADC12CTL0 ^= ADC12SC; 					// Stop sampling/conversion
+		ADCcounter = 0;
+		int uitkomst_analyse =  analyse1(result);
+
+
+		//verzending
+	}
+}
+
 #elif SENSOR_VERSIE ==1
 
 #include "sensoren/ADC1.h"
@@ -14,7 +44,7 @@ int main(void){
 	volatile unsigned int i; 				// volatile voor de compiler
 	WDT_select();
 	init_ADC(); 							// initialiseer de ADC
-	init_UART(); 							// initialiseer de UART
+//	init_UART(); 							// initialiseer de UART
 	init_LED(); 							// initialiseer de LED's
 	send = 0;
 	ADCcounter=0;
@@ -47,7 +77,7 @@ int main(void){
 	volatile unsigned int i; 				// volatile voor de compiler
 	WDT_select();
 	init_ADC(); 							// initialiseer de ADC
-	init_UART(); 							// initialiseer de UART
+//	init_UART(); 							// initialiseer de UART
 	init_LED(); 							// initialiseer de LED's
 	init_RF();								// initialiseer de radio
 	send = 0;
@@ -81,33 +111,33 @@ void list2matrix(char input[32],char output[4][8]){
     }
 }
 
-//void Cbit_2_8bit(char a[10],unsigned char b[15]){
-//	volatile char i;
-//	volatile char j=0;
-//	for (i=0;i<10;i++){
-//		if(!i%2){
-//			b[j]  =a[i]>>4;
-//			b[j+1]=a[i]<<4;
-//			j++;
-//		}else{
-//			b[j] +=a[i]>>8;
-//			b[j+1]=a[i];
-//			j+=2;
-//		}
-//	}
-//}
+void Cbit_2_8bit(unsigned int a[10],unsigned char b[15]){
+	volatile char i;
+	volatile char j=0;
+	for (i=0;i<10;i++){
+		if(!i%2){
+			b[j]  =a[i]>>4;
+			b[j+1]=a[i]<<4;
+			j++;
+		}else{
+			b[j] +=a[i]>>8;
+			b[j+1]=a[i];
+			j+=2;
+		}
+	}
+}
 
-void bit8_2_bitC(char b[15],char a[10]){
+void bit8_2_bitC(unsigned char a[15],unsigned int b[10]){
 	volatile char i;
 	volatile char j=0;
 		for (i=0;i<10;i++){
 			if(!i%2){
-				b[j]  =a[i]>>4;
-				b[j+1]=a[i]<<4;
+				b[i]=(int)a[j]  <<4;
+				b[i]+=a[j+1]>>4;
 				j++;
 			}else{
-				b[j] +=a[i]>>8;
-				b[j+1]=a[i];
+				b[i]=(int)a[j]<<8;
+				b[i]+=a[j+1];
 				j+=2;
 			}
 		}

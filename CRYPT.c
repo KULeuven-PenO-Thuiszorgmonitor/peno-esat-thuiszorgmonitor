@@ -420,7 +420,7 @@ void opdrachtsend(unsigned char reslijst[LENGTERES+1], unsigned char result[4][8
 
 }
 
-void opdrachtreceive(unsigned char result[4][8], unsigned char tekst[8])
+void opdrachtreceive(unsigned char result[4][8], unsigned char tekst[LENGTERES+1])
 {
 	int row, column;
 	int gelijk = 1;
