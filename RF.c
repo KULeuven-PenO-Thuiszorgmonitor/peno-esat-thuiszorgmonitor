@@ -186,7 +186,7 @@ __interrupt void CC1101_ISR(void)
     	  	__no_operation();
 
     	  // Check the CRC results
-    	      if(RxBuffer[CRC_LQI_IDX] && CRC_OK){
+    	      if(RxBuffer[CRC_LQI_IDX] & CRC_OK){
     	      	// Check to see if the ADDRESS is correct)
     	      	if(RxBuffer[0] && ADDRESS){
     	      		Send_Data(ADDRESS_MASTER,TO_BE_CHANGED);
@@ -249,7 +249,7 @@ __interrupt void CC1101_ISR(void)
     	  	__no_operation();
 
     	  // Check the CRC results
-    	      if(RxBuffer[CRC_LQI_IDX] && CRC_OK){
+    	      if(RxBuffer[CRC_LQI_IDX] & CRC_OK){
     	      	// Check to see if the ADDRESS is correct)
     	      	if(RxBuffer[0] && ADDRESS){
     	      		for(i = PACKET_LEN+1; i > 0; i--){
